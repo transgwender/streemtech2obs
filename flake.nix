@@ -44,6 +44,10 @@
           # nix build
           default = packages.streemtech2obs; # rec
         };
+
+        nixosModules = import ./nixos-modules {
+          overlays = overlayList;
+        };
       }
     ) // {
       nixosConfigurations.container = nixpkgs.lib.nixosSystem rec {
