@@ -61,6 +61,11 @@
 
         modules = [
           self.nixosModules.${system}.default
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [
+              self.overlays.${system}.default
+            ];
+          })
           ({ pkgs, config, inputs, ... }: {
             # Only allow this to boot as a container
             boot.isContainer = true;
