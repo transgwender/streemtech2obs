@@ -1,3 +1,3 @@
 { rustPkgs }:
 
-rustPkgs.workspace.streemtech2obs
+(rustPkgs.workspace.streemtech2obs {})
