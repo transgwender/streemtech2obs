@@ -44,7 +44,7 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Restart = "on-failure";
-        ExecStart = "+${pkgs.streemtech2obs}/bin/streemtech2obs -u";
+#        ExecStart = "+${pkgs.streemtech2obs}/bin/streemtech2obs -u";
         User = "streemtech2obs";
         RuntimeDirectory = "streemtech2obs";
         RuntimeDirectoryMode = "0755";
