@@ -24,8 +24,9 @@
         # create nixpkgs that contains rustBuilder from cargo2nix overlay
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ cargo2nix.overlays.default ];
+          overlays = overlayList;
         };
+        overlayList = [ cargo2nix.overlays.default ];
 
         # create the workspace & dependencies package set
         rustPkgs = pkgs.rustBuilder.makePackageSet {
@@ -35,6 +36,9 @@
 
       in rec {
         # this is the output (recursive) set (expressed for each system)
+
+        # A Nixpkgs overlay that provides a 'streemtech2obs' package.
+        overlays.default = final: prev: { streemtech2obs = final.callPackage ./package.nix { rustPkgs = rustPkgs; }; };
 
         # the packages in `nix build .#packages.<system>.<name>`
         packages = {
@@ -57,11 +61,6 @@
 
         modules = [
           self.nixosModules.${system}.default
-          ({ pkgs, ... }: {
-            nixpkgs.overlays = [
-              self.overlays.${system}.default
-            ];
-          })
           ({ pkgs, config, inputs, ... }: {
             # Only allow this to boot as a container
             boot.isContainer = true;

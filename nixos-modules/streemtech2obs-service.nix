@@ -9,7 +9,7 @@ with lib;
 
 let
 
-  cfg = config.services.blahaj-bot;
+  cfg = config.services.streemtech2obs;
 
 in
 
@@ -34,7 +34,7 @@ in
     users.extraUsers.streemtech2obs = {
       description = "streemtech2obs";
       group = "streemtech2obs";
-      isSystemuser = true;
+      isSystemUser = true;
       useDefaultShell = true;
     };
 
