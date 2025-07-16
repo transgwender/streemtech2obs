@@ -3,8 +3,12 @@
     "cargo2nix": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "rust-overlay": "rust-overlay"
       },
       "locked": {
@@ -17,7 +21,6 @@
       },
       "original": {
         "owner": "cargo2nix",
-        "ref": "release-0.12",
         "repo": "cargo2nix",
         "type": "github"
       }
@@ -43,11 +46,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
         "type": "github"
       },
       "original": {
@@ -58,16 +61,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1705099185,
-        "narHash": "sha256-SxJenKtvcrKJd0TyJQMO3p6VA7PEp+vmMnmlKFzWMNs=",
-        "owner": "nixos",
+        "lastModified": 1752557398,
+        "narHash": "sha256-/rQkVdNZhMmQrA1EQJs1ejc5e502MCY66cMJsyyLGFc=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2bce5ccff0ad7abda23e8bb56434b6877a446694",
+        "rev": "bb6f90906a3922ec1b201a419b616c6fbbf578a1",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "release-23.11",
+        "owner": "NixOS",
+        "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -75,14 +78,8 @@
     "root": {
       "inputs": {
         "cargo2nix": "cargo2nix",
-        "flake-utils": [
-          "cargo2nix",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "cargo2nix",
-          "nixpkgs"
-        ]
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
       }
     },
     "rust-overlay": {

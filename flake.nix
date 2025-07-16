@@ -1,9 +1,13 @@
 {
   inputs = {
-    # Use a github flake URL for real packages
-    cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.12";
-    flake-utils.follows = "cargo2nix/flake-utils";
-    nixpkgs.follows = "cargo2nix/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    flake-utils.url = "github:numtide/flake-utils";
+
+    cargo2nix = {
+        url = "github:cargo2nix/cargo2nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = inputs: with inputs; # pass through all inputs and bring them into scope
@@ -41,5 +45,32 @@
           default = packages.streemtech2obs; # rec
         };
       }
-    );
+    ) // {
+      nixosConfigurations.container = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          self.nixosModules.${system}.default
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [
+              self.overlays.${system}.default
+            ];
+          })
+          ({ pkgs, config, inputs, ... }: {
+            # Only allow this to boot as a container
+            boot.isContainer = true;
+
+            networking.hostName = "streemtech2obs";
+
+            services.streemtech2obs = {
+              enable = true;
+            };
+
+            system.stateVersion = "24.11";
+          })
+        ];
+      };
+    };
 }
