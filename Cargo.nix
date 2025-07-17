@@ -25,7 +25,7 @@ args@{
   cargoConfig ? {},
 }:
 let
-  nixifiedLockHash = "e4cb05f35ee1ef84884c76adf696907cfe3ca1806cfe690a2cde5292d2ed1030";
+  nixifiedLockHash = "9f0b31d9e9e1b91af9512c1cf203551e0989e0d2ae43596abaef371244a0796f";
   workspaceSrc = if args.workspaceSrc == null then ./. else args.workspaceSrc;
   currentLockHash = builtins.hashFile "sha256" (workspaceSrc + /Cargo.lock);
   lockHashIgnored = if ignoreLockHash
@@ -1245,6 +1245,7 @@ in
     src = fetchCrateLocal workspaceSrc;
     dependencies = {
       serde = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".serde."1.0.219" { inherit profileName; }).out;
+      serde_json = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".serde_json."1.0.140" { inherit profileName; }).out;
       tokio = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".tokio."1.46.1" { inherit profileName; }).out;
       warp = (rustPackages."registry+https://github.com/rust-lang/crates.io-index".warp."0.3.7" { inherit profileName; }).out;
     };
