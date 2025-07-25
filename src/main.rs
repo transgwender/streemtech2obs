@@ -9,8 +9,6 @@ mod routes;
 
 #[tokio::main]
 async fn main() {
-    let routes = routes::routes();
-
     let args: Vec<String> = env::args().collect();
 
     let config: Config = parse_config(&args).unwrap_or_else(|err| {
@@ -18,8 +16,17 @@ async fn main() {
         process::exit(1);
     });
 
-    println!("Server starting at http://{}:{}", config.ip, config.port);
-    let addr = config.ip.parse::<IpAddr>().unwrap();
+    server(config).await;
+}
+
+async fn server(config: Config) {
+    let routes = routes::routes();
+
+    let addr = config.ip.parse::<IpAddr>().unwrap_or_else(|err| {
+        eprintln!("Problem parsing IP address: {err}");
+        process::exit(1);
+    });
+    println!("Server starting at http://{}:{}", addr, config.port);
     warp::serve(routes).run((addr, config.port)).await;
 }
 
